@@ -2,21 +2,25 @@ import React from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { AppUI } from "./AppUI";
 
+// localStorage.removeItem('TODOS_V1');
 // const defaultTodos = [
 //   { text: "Cortar cebolla", completed: true },
 //   { text: "Tomar el Curso de Intro a React.js", completed: false },
 //   { text: "Llorar con la Llorona", completed: false },
 //   { text: "LALALALALA", completed: false },
 //   { text: "Usar estados derivados", completed: true },
-// ];
-
+// ]
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
-// localStorage.removeItem('TODOS_V1');
 
 // por convencio las funciones de los custom hooks inician su nombre con use
 
 function App() {
-  const [todos, saveTodos] = useLocalStorage("TODOS_V1", []);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = React.useState("");
 
   const completedTodos = todos.filter((todo) => !!todo.completed).length;
@@ -35,18 +39,6 @@ function App() {
     saveTodos(newTodos);
   };
 
-  console.log("log 1");
-  // React.useEffect(() => {
-  //   console.log("looooooooOOOOOooog 2");
-  // });
-  // React.useEffect(() => {
-  //   console.log("looooooooOOOOOooog 2");
-  // }, []);
-  React.useEffect(() => {
-    console.log("looooooooOOOOOooog 2");
-  }, [totalTodos]);
-  console.log("log 3");
-
   const deleteTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex((todo) => todo.text === text);
@@ -63,6 +55,8 @@ function App() {
       completeTodo={completeTodo}
       deleteTodo={deleteTodo}
       searchValue={searchValue}
+      loading={loading}
+      error={error}
     />
   );
 }
