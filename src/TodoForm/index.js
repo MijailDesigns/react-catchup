@@ -1,13 +1,10 @@
 import React from "react";
 import "./TodoForm.css";
-import { TodoContext } from "../TodoContext/index";
 
-function TodoForm() {
-  const { setOpenModal, addTodo } = React.useContext(TodoContext);
+function TodoForm({ setOpenModal, addTodo }) {
   const [newTodoValue, setNewTodoValue] = React.useState("");
 
   const isDescriptionValid = newTodoValue.length >= 2;
-  console.log(isDescriptionValid);
 
   const onSubmit = (event) => {
     event.preventDefault();
